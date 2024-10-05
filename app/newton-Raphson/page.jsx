@@ -1,7 +1,8 @@
 'use client'
 import { InlineMath } from "react-katex";
 import 'katex/dist/katex.min.css';
-import Plot from 'react-plotly.js';
+import dynamic from "next/dynamic"
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false })
 import { useState } from "react";
 import { evaluate, derivative } from 'mathjs';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';

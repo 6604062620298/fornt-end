@@ -1,7 +1,8 @@
 'use client'
 import { InlineMath } from "react-katex";
 import 'katex/dist/katex.min.css';
-import Plot from 'react-plotly.js';
+import dynamic from "next/dynamic"
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false })
 import { useState } from "react"
 import { evaluate } from 'mathjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
@@ -161,7 +162,6 @@ const page = () => {
           <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain'config={{ scrollZoom: true }}/>
         </div>
       </div>
-
 
       {/* Table */}
         <h1 className="block text-gray-700 text-sm font-bold mb-2">Table :</h1>
