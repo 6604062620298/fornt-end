@@ -1,0 +1,32 @@
+{
+  "name": "numer_nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "better-react-mathjax": "^2.0.3",
+    "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.4",
+    "katex": "^0.16.11",
+    "mathjax": "^3.2.2",
+    "mathjs": "^13.1.1",
+    "next": "^14.2.13",
+    "plotly.js": "^2.35.2",
+    "react": "^18",
+    "react-bootstrap": "^2.10.4",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18",
+    "react-katex": "^3.0.1",
+    "react-plotly.js": "^2.6.0"
+  },
+  "devDependencies": {
+    "daisyui": "^4.12.10",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
