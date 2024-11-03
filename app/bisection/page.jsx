@@ -29,7 +29,7 @@ const Sample = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/data", datadb);
+      await axios.post("https://back-end-three-rho.vercel.app/data", datadb);
     } catch (err) {
       console.log("Error posting data:", err); 
     }

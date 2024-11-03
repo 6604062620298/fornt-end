@@ -17,70 +17,70 @@ const Page = () => {
   const [data, setData] = useState([]); // สำหรับเก็บข้อมูลตาราง
   const [Equation, setEquation] = useState('(x^6) - 13'); // สมการเริ่มต้น
   const [X_0, setX_0] = useState('5'); // ค่าจุดเริ่มต้น
-  const [X_1, setX_1] = useState('10'); 
+  const [X_1, setX_1] = useState('10');
   const [Error, setError] = useState(0.00001); // ค่าความคลาดเคลื่อน
   const [Xresult, setXresult] = useState(0.0); // ตั้งค่า Xresult เป็น 0.0 เริ่มต้น
 
   const adddata = async () => {
     const datadb = {
-     Solution: "Secant Method",
-     Equation: Equation, 
-     Result: Xresult.toString()  
-   };
+      Solution: "Secant Method",
+      Equation: Equation,
+      Result: Xresult.toString()
+    };
 
-   try {
-     await axios.post("http://localhost:5000/data", datadb);
-   } catch (err) {
-     console.log("Error posting data:", err); 
-   }
- };
+    try {
+      await axios.post("http://localhost:5000/data", datadb);
+    } catch (err) {
+      console.log("Error posting data:", err);
+    }
+  };
 
 
   const Calsecant = (X_zero, X_one, Equation, errorValue) => {
     let x_0 = X_zero;
-    let x_1 = X_one; 
+    let x_1 = X_one;
     let iteration = 0;
     let fX_0, fX_1, yk;
-  
-    const tempData = []; 
+
+    const tempData = [];
     const newGraphData = [];
-  
+
     do {
       iteration++;
-  
+
       let scope_0 = { x: x_0 };
       let scope_1 = { x: x_1 };
-  
+
       fX_0 = evaluate(Equation, scope_0);
       fX_1 = evaluate(Equation, scope_1);
-  
+
       let denominator = fX_1 - fX_0;
-      if(denominator === 0){
+      if (denominator === 0) {
         console.error("Division by zero error");
         break;
       }
-  
+
       let x_new = x_1 - (fX_1 * (x_1 - x_0)) / denominator;
       const ea = error(x_1, x_new);
-  
+
       x_0 = x_1;
       x_1 = x_new;
-  
+
       let scope_x_new = { x: x_new };
       yk = evaluate(Equation, scope_x_new);
-  
-      tempData.push({ iteration, X_0: x_0, X_1: yk, X_New: x_new, error_show: ea});
+
+      tempData.push({ iteration, X_0: x_0, X_1: yk, X_New: x_new, error_show: ea });
       newGraphData.push({ x: x_new, y: fX_0 });
-  
+
       if (ea <= errorValue) break;
-  
+
     } while (Math.abs(fX_1) > errorValue);
-  
+
     setData(tempData);
     setdatagraph(newGraphData);
     setXresult(x_1);
   };
-  
+
 
   const inputEquation = (event) => {
     setEquation(event.target.value);
@@ -88,7 +88,7 @@ const Page = () => {
   const inputx_0 = (event) => {
     setX_0(parseFloat(event.target.value));
   };
-  const inputx_1= (event) => {
+  const inputx_1 = (event) => {
     setX_1(parseFloat(event.target.value));
   };
   const inputerror = (event) => {
@@ -106,19 +106,19 @@ const Page = () => {
         mode: "lines markers", //จะจุดหรือจะเส้น
         x: datagraph.map((point) => point.x),
         y: datagraph.map((point) => point.y),
-        marker: {color: 'blue'},
-        line: {color: 'red' },
+        marker: { color: 'blue' },
+        line: { color: 'red' },
         name: 'f(X)',
-    },
-    {
-      type: "scatter", //กราฟที่จะใช้
-      mode: "lines markers", //จะจุดหรือจะเส้น
-      x: datagraph.map((point) => point.x),
-      y: datagraph.map((point) => point.y),
-      marker: {color: 'red'},
-      line: {color: 'blue' },
-      name: "f'(X)",
-  },
+      },
+      {
+        type: "scatter", //กราฟที่จะใช้
+        mode: "lines markers", //จะจุดหรือจะเส้น
+        x: datagraph.map((point) => point.x),
+        y: datagraph.map((point) => point.y),
+        marker: { color: 'red' },
+        line: { color: 'blue' },
+        name: "f'(X)",
+      },
 
     ],
     layout: {
@@ -131,7 +131,7 @@ const Page = () => {
       }
     },
   };
-  
+
 
   return (
     <>
@@ -196,35 +196,35 @@ const Page = () => {
       {/* Graph */}
       <div className='min-h-max flex items-center justify-center gap-3  rounded-lg p-9'>
         <div className='rounded-lg shadow-lg w-full md:w-3/4 lg:w-1/2 flex justify-center gap-3 overflow-hidden'>
-          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain'config={{ scrollZoom: true }}/>
+          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain' config={{ scrollZoom: true }} />
         </div>
       </div>
 
 
       {/* Table */}
       <h1 className="block text-gray-700 text-sm font-bold mb-2">Table :</h1>
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full border-2 shadow-lg">
-              <thead>
-                <tr>
-                  <th>Iteration</th>
-                  <th>X</th>
-                  <th>Y</th>
-                  <th>Error</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((element, index) => (
-                  <tr key={index}>
-                    <td>{element.iteration}</td>
-                    <td>{element.X_New.toPrecision(12)}</td>
-                    <td>{element.X_1.toPrecision(12)}</td>
-                    <td>{element.error_show.toPrecision(12)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra w-full border-2 shadow-lg">
+          <thead>
+            <tr>
+              <th>Iteration</th>
+              <th>X</th>
+              <th>Y</th>
+              <th>Error</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((element, index) => (
+              <tr key={index}>
+                <td>{element.iteration}</td>
+                <td>{element.X_New.toPrecision(12)}</td>
+                <td>{element.X_1.toPrecision(12)}</td>
+                <td>{element.error_show.toPrecision(12)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 };
