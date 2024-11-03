@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { det } from 'mathjs';
 import { InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 
@@ -23,37 +22,53 @@ function Page() {
     setSolutionSteps([]);
   }, [size]);
 
-  const calculateCramer = () => {
-    const a = matrixA.map(row => row.map(Number)); // Convert inputs to numbers
-    const b = matrixB.map(Number);
-    const detA = det(a); // Use det from mathjs
+  // Helper function to create a deep copy of a 2D array
+  const cloneMatrix = (matrix) => matrix.map((row) => [...row]);
 
-    if (Math.abs(detA) <= epsilon) {
-      alert("The determinant of the matrix is zero. The system has no solution.");
-      return;
-    }
-
-    const x = [...resultX];
+  const calculateGaussJordan = () => {
+    let augmentedMatrix = matrixA.map((row, i) => [...row, parseFloat(matrixB[i])]);
     let steps = [];
+    
+    // Add the initial augmented matrix to the steps
+    steps.push('Initial Augmented Matrix:');
+    steps.push(formatMatrixForLatex(augmentedMatrix));
 
-    steps.push(`\\text{det}(A) = ${detA.toFixed(6)}`);
-
+    // Gaussian-Jordan elimination
     for (let i = 0; i < size; i++) {
-      const modifiedMatrix = a.map((row, rowIndex) => {
-        const newRow = [...row];
-        newRow[i] = b[rowIndex]; // Replace the ith column with B vector
-        return newRow;
-      });
+      // Make the diagonal element 1
+      const diagElement = augmentedMatrix[i][i];
+      if (Math.abs(diagElement) < epsilon) {
+        alert("Matrix is singular or nearly singular.");
+        return;
+      }
 
-      const detAi = det(modifiedMatrix);
-      x[i] = (detAi / detA).toFixed(6);
+      for (let j = 0; j <= size; j++) {
+        augmentedMatrix[i][j] /= diagElement;
+      } 
 
-      // Add the calculation for x_i to the solution steps
-      steps.push(`x_${i + 1} = \\frac{\\text{det}(A_${i + 1})}{\\text{det}(A)} = \\frac{${detAi.toFixed(6)}}{${detA.toFixed(6)}} = ${x[i]}`);
+      steps.push(`Make row ${i + 1} diagonal element 1:`);
+      steps.push(formatMatrixForLatex(augmentedMatrix));
+
+      // Make other rows' column i elements 0
+      for (let k = 0; k < size; k++) {
+        if (k !== i) {
+          const factor = augmentedMatrix[k][i];
+          for (let j = 0; j <= size; j++) {
+            augmentedMatrix[k][j] -= factor * augmentedMatrix[i][j];
+          }
+          steps.push(`Make column ${i + 1}, row ${k + 1} element 0:`);
+          steps.push(formatMatrixForLatex(augmentedMatrix));
+        }
+      }
     }
 
-    setResultX(x);
-    setSolutionSteps(steps); // Set the solution steps for display
+    const solution = augmentedMatrix.map(row => row[size].toFixed(6));
+    setResultX(solution);
+    setSolutionSteps(steps);
+  };
+
+  const formatMatrixForLatex = (matrix) => {
+    return `\\begin{pmatrix} ${matrix.map(row => row.map(el => el.toFixed(6)).join(' & ')).join(' \\\\ ')} \\end{pmatrix}`;
   };
 
   const handleInputChange = (setMatrix, matrix, rowIndex, colIndex, value) => {
@@ -77,18 +92,17 @@ function Page() {
   return (
     <div>
       <div className='p-7'>
-        <h1 className="text-center font-bold text-4xl p-4">Cramer's Rule</h1>
+        <h1 className="text-center font-bold text-4xl p-4">Gaussian-Jordan</h1>
       </div>
 
       <div className='m-4 md:mx-9'>
-        <div className="bg-white rounded-lg   w-auto max-w-full">
-          <div className="text-center mb-4">
-          </div>
+        <div className="bg-white rounded-lg w-auto max-w-full">
+          <div className="text-center mb-4"></div>
 
-          {/* size  */}
+          {/* size */}
           <div className='flex justify-center'>
             <div className="flex flex-col">
-              <label className="p-2"><InlineMath math="[A]" /></label>
+              <label className="p-2">[A]</label>
               <input type="number" value={size} min="1" onChange={(e) => setSize(parseInt(e.target.value) || 1)} className="btn border shadow-lg px-2 py-1 w-64" />
             </div>
           </div>
@@ -96,7 +110,7 @@ function Page() {
           {/* error */}
           <div className="flex justify-center">
             <div className='flex flex-col'>
-              <label className="p-2"><InlineMath math="Error" /></label>
+              <label className="p-2">Error</label>
               <input type="number" value={epsilon} step="0.000001" onChange={(e) => setEpsilon(parseFloat(e.target.value) || 0.000001)} className="btn border shadow-lg px-2 py-1 w-64" />
             </div>
           </div>
@@ -147,16 +161,15 @@ function Page() {
 
           <div className='flex flex-col md:flex-row justify-center items-center mb-4 gap-4'>
             <div className="flex items-center gap-2">
-              <button onClick={calculateCramer} className="btn border-2 shadow-lg bg-blue-600 text-white">Calculate</button>
+              <button onClick={calculateGaussJordan} className="btn border-2 shadow-lg bg-blue-600 text-white">Calculate</button>
             </div>
           </div>
         </div>
 
-
         {/* Display Solution Steps */}
         <div className='my-11 border-2 shadow-lg p-4 md:p-14'>
           <h1 className='block text-gray-700 text-sm font-bold mb-2'>Solution :</h1>
-          <div className="mtimport { det } from 'mathjs';-4 overflow-x-auto flex justify-center">
+          <div className="mt-4 overflow-x-auto flex justify-center">
             <div className="flex flex-col items-center">
               {solutionSteps.map((step, index) => (
                 <div key={index} className="mb-2 text-sm md:text-base">
@@ -166,7 +179,6 @@ function Page() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 'use client'
+import axios from "axios";
 import { InlineMath } from "react-katex";
 import 'katex/dist/katex.min.css';
 import dynamic from "next/dynamic"
@@ -20,49 +21,67 @@ const Page = () => {
   const [Error, setError] = useState(0.00001); // ค่าความคลาดเคลื่อน
   const [Xresult, setXresult] = useState(0.0); // ตั้งค่า Xresult เป็น 0.0 เริ่มต้น
 
+  const adddata = async () => {
+    const datadb = {
+     Solution: "Secant Method",
+     Equation: Equation, 
+     Result: Xresult.toString()  
+   };
+
+   try {
+     await axios.post("http://localhost:5000/data", datadb);
+   } catch (err) {
+     console.log("Error posting data:", err); 
+   }
+ };
+
+
   const Calsecant = (X_zero, X_one, Equation, errorValue) => {
     let x_0 = X_zero;
     let x_1 = X_one; 
     let iteration = 0;
-    let fX_0, fX_1;
-
+    let fX_0, fX_1, yk;
+  
     const tempData = []; 
-    const newGraphData = []; // ข้อมูลสำหรับกราฟ
-
+    const newGraphData = [];
+  
     do {
       iteration++;
-
+  
       let scope_0 = { x: x_0 };
       let scope_1 = { x: x_1 };
-
+  
       fX_0 = evaluate(Equation, scope_0);
       fX_1 = evaluate(Equation, scope_1);
-
+  
       let denominator = fX_1 - fX_0;
       if(denominator === 0){
         console.error("Division by zero error");
         break;
       }
-
+  
       let x_new = x_1 - (fX_1 * (x_1 - x_0)) / denominator;
       const ea = error(x_1, x_new);
-
-      tempData.push({ iteration, X_0: x_0, X_1: x_1, X_New: x_new, error_show: ea, f:fX_1,}); // เก็บค่าลงในตาราง
-      newGraphData.push({ x: x_new, y: 0,});
-      newGraphData.push({ x: x_new, y: fX_0,}); // เก็บค่าลงในกราฟ
-
+  
       x_0 = x_1;
       x_1 = x_new;
-
-      if (ea <= errorValue) break; 
-
-    } while (Math.abs(fX_1) > errorValue); 
-
-    setData(tempData); // ตั้งค่าข้อมูลในตาราง
-    setdatagraph(newGraphData); // ตั้งค่าข้อมูลสำหรับกราฟ
-    setXresult(x_1); // แสดงค่าผลลัพธ์สุดท้าย
+  
+      let scope_x_new = { x: x_new };
+      yk = evaluate(Equation, scope_x_new);
+  
+      tempData.push({ iteration, X_0: x_0, X_1: yk, X_New: x_new, error_show: ea});
+      newGraphData.push({ x: x_new, y: fX_0 });
+  
+      if (ea <= errorValue) break;
+  
+    } while (Math.abs(fX_1) > errorValue);
+  
+    setData(tempData);
+    setdatagraph(newGraphData);
+    setXresult(x_1);
   };
   
+
   const inputEquation = (event) => {
     setEquation(event.target.value);
   };
@@ -77,6 +96,7 @@ const Page = () => {
   };
   const calculateRoot = () => {
     Calsecant(X_0, X_1, Equation, Error);
+    adddata()
   };
 
   const chartData = {
@@ -102,14 +122,12 @@ const Page = () => {
 
     ],
     layout: {
-      title: "Secant Method",
+      title: "Graph",
       xaxis: {
-        title: 'X',
-        zeroline: true,
+        zeroline: true
       },
       yaxis: {
-        title: 'f(X)',
-        zeroline: true,
+        zeroline: true
       }
     },
   };
@@ -190,7 +208,8 @@ const Page = () => {
               <thead>
                 <tr>
                   <th>Iteration</th>
-                  <th>X_new</th>
+                  <th>X</th>
+                  <th>Y</th>
                   <th>Error</th>
                 </tr>
               </thead>
@@ -199,7 +218,7 @@ const Page = () => {
                   <tr key={index}>
                     <td>{element.iteration}</td>
                     <td>{element.X_New.toPrecision(12)}</td>
-                    {/* <td>{element.X_0.toPrecision(12)}</td> */}
+                    <td>{element.X_1.toPrecision(12)}</td>
                     <td>{element.error_show.toPrecision(12)}</td>
                   </tr>
                 ))}

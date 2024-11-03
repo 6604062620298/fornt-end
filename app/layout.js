@@ -22,138 +22,185 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-      <div className="navbar bg-white border-1 shadow-2xl p-4">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
+        <div className="navbar bg-white border-1 shadow-2xl p-4">
+          <div className="navbar-start">
+            <div className="dropdown">
+              <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h8m-8 6h16" />
+                </svg>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                <li>
+                  <a>Root Of Equation</a>
+                  <ul className="p-2">
+                    <li><Link href="/graphical">Graphical method</Link></li>
+                    <li><Link href="/bisection">Bisection</Link></li>
+                    <li><Link href="/false_position">False position</Link></li>
+                    <li><Link href="/one_point">One point Iterations</Link></li>
+                    <li><Link href="/newton-Raphson">Newton-Raphson</Link></li>
+                    <li><Link href="/secant">Secant method</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  <a>Linear Equation</a>
+                  <ul className="p-2">
+                    <li><Link href="/cramer">Cramer's rule</Link></li>
+                    <li><Link href="/guass">Guass Elimination</Link></li>
+                    <li><Link href="/false_position">False position</Link></li>
+                    <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
+                    <li><Link href="/secant">Secant method</Link></li>
+                    <li><Link href="/one_point">One point Iterations</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  <a>Interpolation</a>
+                  <ul className="p-2">
+                    <li><Link href="/graphical">Graphical method</Link></li>
+                    <li><Link href="/lagrange">Lagrange Interpolation</Link></li>
+                  </ul>
+                  <a>Spline interpolation</a>
+                  <ul className="p-2">
+                    <li><Link href="/spline">Linear interpolation</Link></li>
+                    <li><Link href="/spline">Quadratic interpolation</Link></li>
+                    <li><Link href="/spline">Cubic interpolation</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  <a>Extrapolation</a>
+                  <ul className="p-2">
+                    <li><Link href="/simple_regression">Simple Regression</Link></li>
+                    <li><Link href="/Multiple">Multiple Regression extrapolation</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  <a>Intergration</a>
+                  <ul className="p-2">
+                    <li><Link href="/trapezoidal">Single Trapezoidal Rule</Link></li>
+                    <li><Link href="/composite">Composite Trapezoidal Rule</Link></li>
+                    <li><Link href="/simpson">Single Simpson's Rule</Link></li>
+                    <li><Link href="/composite_simpson">Composite Simpson's Rule</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  <a>Differention</a>
+                  <ul className="p-2">
+                    <li><Link href="/graphical">Graphical method</Link></li>
+                  </ul>
+                </li>
+              </ul>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            <a className="btn btn-ghost text-xl">Numerical</a>
+            <label class="flex cursor-pointer gap-2">
+              <input type="checkbox" value="synthwave" class="toggle theme-controller" />
+            </label>
+          </div>
+
+
+
+          <div className="navbar-center hidden lg:flex ">
+            <ul className="menu menu-horizontal px-1">
               <li>
-                <a>Root Of Equation</a>
-                <ul className="p-2">
-                  <li><Link href="/graphical">Graphical method</Link></li>
-                  <li><Link href="/bisection">Bisection</Link></li>
-                  <li><Link href="/false_position">False position</Link></li>
-                  <li><Link href="/one_point">One point Iterations</Link></li>
-                  <li><Link href="/newton-Raphson">Newton-Raphson</Link></li>
-                  <li><Link href="/secant">Secant method</Link></li>
-                </ul>
+                <details>
+                  <summary className="p-7">Root Of Equation</summary>
+                  <ul className="p-2">
+                    <li><Link href="/graphical">Graphical method</Link></li>
+                    <li><Link href="/bisection">Bisection</Link></li>
+                    <li><Link href="/false_position">False position</Link></li>
+                    <li><Link href="/one_point">One point Iterations</Link></li>
+                    <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
+                    <li><Link href="/secant">Secant method</Link></li>
+                    <li className="text-green-800"><Link href="/history/Root_history">History Root</Link></li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+            <ul className="menu menu-horizontal px-1">
+              <li>
+                <details>
+                  <summary className="p-7">Linear Equation</summary>
+                  <ul className="p-2">
+                    <li><Link href="/cramer">Cramer's rule</Link></li>
+                    <li><Link href="/guass">Guass Elimination</Link></li>
+                    <li><Link href="/gj">Guass Jordan</Link></li>
+                    <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
+                    <li><Link href="/secant">Secant method</Link></li>
+                    <li><Link href="/one_point">One point Iterations</Link></li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+            <ul className="menu menu-horizontal px-1">
+              <li>
+                <details>
+                  <summary className="p-7">Interpolation</summary>
+                  <ul className="p-2">
+                    <li><Link href="/newton_div_dif">Newton's Divided Difference</Link></li>
+                    <li><Link href="/lagrange">Lagrange Interpolation</Link></li>
+                    <details>
+                      <summary className="py-3">Spline interpolation</summary>
+                      <ul className="p-2">
+                        <li><Link href="/spline">Linear interpolation</Link></li>
+                        <li><Link href="/quadratic_inter">Quadratic interpolation</Link></li>
+                        <li><Link href="/cubic">Cubic interpolation</Link></li>
+                      </ul>
+                    </details>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+            <ul className="menu menu-horizontal px-1">
+              <li>
+                <details>
+                  <summary className="p-7">Extrapolation</summary>
+                  <ul className="p-2">
+                    <li><Link href="/simple_regression">Simple Regression</Link></li>
+                    <li><Link href="/Multiple">Multiple Regression extrapolation</Link></li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+            <ul className="menu menu-horizontal px-1">
+              <li>
+                <details>
+                  <summary className="p-7">Intergration</summary>
+                  <ul className="p-2">
+                    <li><Link href="/trapezoidal">Single Trapezoidal</Link></li>
+                    <li><Link href="/composite">Composite Trapezoidal</Link></li>
+                    <li><Link href="/simpson">Single Simpson's</Link></li>
+                    <li><Link href="/composite_simpson">Composite Simpson's</Link></li>
+                    <li><Link href="/history/Root_history/integratio_history">History Intergration</Link></li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+            <ul className="menu menu-horizontal px-1">
+              <li>
+                <details>
+                  <summary className="p-8">Differention</summary>
+                  <ul className="p-2">
+                    <li><Link href="/bisection">Bisection</Link></li>
+                  </ul>
+                </details>
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">Numerical</a>
+          <div className="navbar-end">
+            <Link className="btn" href="/">HOME</Link>
+          </div>
         </div>
-        <div className="navbar-center hidden lg:flex ">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <details>
-                <summary className="p-7">Root Of Equation</summary>
-                <ul className="p-2">
-                  <li><Link href="/graphical">Graphical method</Link></li>
-                  <li><Link href="/bisection">Bisection</Link></li>
-                  <li><Link href="/false_position">False position</Link></li>
-                  <li><Link href="/one_point">One point Iterations</Link></li>
-                  <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
-                  <li><Link href="/secant">Secant method</Link></li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <details>
-                <summary className="p-7">Linear Equation</summary>
-                <ul className="p-2">
-                  <li><Link href="/cramer">Cramer's rule</Link></li>
-                  <li><Link href="/guass">Guass Elimination</Link></li>
-                  <li><Link href="/false_position">False position</Link></li>
-                  <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
-                  <li><Link href="/secant">Secant method</Link></li>
-                  <li><Link href="/one_point">One point Iterations</Link></li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <details>
-                <summary className="p-7">Interpolation</summary>
-                <ul className="p-2">
-                  <li><Link href="/graphical">Graphical method</Link></li>
-                  <li><Link href="/bisection">Bisection</Link></li>
-                  <li><Link href="/false_position">False position</Link></li>
-                  <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
-                  <li><Link href="/secant">Secant method</Link></li>
-                  <li><Link href="/one_point">One point Iterations</Link></li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <details>
-                <summary className="p-7">Extrapolation</summary>
-                <ul className="p-2">
-                  <li><Link href="/graphical">Graphical method</Link></li>
-                  <li><Link href="/bisection">Bisection</Link></li>
-                  <li><Link href="/false_position">False position</Link></li>
-                  <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
-                  <li><Link href="/secant">Secant method</Link></li>
-                  <li><Link href="/one_point">One point Iterations</Link></li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-        <ul className="menu menu-horizontal px-1">
-            <li>
-              <details>
-                <summary className="p-7">Intergration</summary>
-                <ul className="p-2">
-                  <li><Link href="/graphical">Graphical method</Link></li>
-                  <li><Link href="/bisection">Bisection</Link></li>
-                  <li><Link href="/false_position">False position</Link></li>
-                  <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
-                  <li><Link href="/secant">Secant method</Link></li>
-                  <li><Link href="/one_point">One point Iterations</Link></li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <details>
-                <summary className="p-8">Differention</summary>
-                <ul className="p-2">
-                <li><Link href="/bisection">Bisection</Link></li>
-                  <li><Link href="/false_position">False position</Link></li>
-                  <li><Link href="/newton-Raphson">Newton Raphson</Link></li>
-                  <li><Link href="/secant">Secant method</Link></li>
-                  <li><Link href="/one_point">One point Iterations</Link></li>
-                  <li><Link href="/graphical">Graphical method</Link></li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-        </div>
-        <div className="navbar-end">
-          <Link className="btn" href="/">HOME</Link>
-        </div>
-      </div>
-      {children}
+        {children}
       </body>
     </html>
   );

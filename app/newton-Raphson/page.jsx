@@ -1,4 +1,5 @@
 'use client'
+import axios from "axios";
 import { InlineMath } from "react-katex";
 import 'katex/dist/katex.min.css';
 import dynamic from "next/dynamic"
@@ -19,6 +20,20 @@ const page = () => {
   const [Xstart, setXstart] = useState(10); // ค่าจุดเริ่มต้น
   const [Error, setError] = useState(0.00001); // ค่าความคลาดเคลื่อน
   const [Xresult, setXresult] = useState(0.0); // ตั้งค่า Xresult เป็น 0.0 เริ่มต้น
+
+  const adddata = async () => {
+    const datadb = {
+     Solution: "Newton Raphson",
+     Equation: Equation, 
+     Result: Xresult.toString()  
+   };
+
+   try {
+     await axios.post("http://localhost:5000/data", datadb);
+   } catch (err) {
+     console.log("Error posting data:", err); 
+   }
+ };
 
   const Calnewton = (Xstart, Equation, errorValue) => {
     let xstart = Xstart
@@ -65,6 +80,7 @@ const page = () => {
 
   const calculateRoot = () => {
     Calnewton(Xstart, Equation, Error);
+    adddata()
   };
 
   const chartData = {
@@ -87,7 +103,7 @@ const page = () => {
   },
     ],
     layout: {
-        title: "Newton Raphson",
+        title: "Graph",
         xaxis: {
             zeroline: true,
         },

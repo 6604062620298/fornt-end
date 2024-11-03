@@ -1,4 +1,5 @@
 'use client'
+import axios from "axios";
 import { InlineMath } from "react-katex";
 import 'katex/dist/katex.min.css';
 import dynamic from "next/dynamic"
@@ -19,28 +20,42 @@ const Page = () => {
   const [Error, setError] = useState(0.00001); // ค่าความคลาดเคลื่อน
   const [Xresult, setXresult] = useState(0.0); // ตั้งค่า Xresult เป็น 0.0 เริ่มต้น
 
+  const adddata = async () => {
+    const datadb = {
+     Solution: "One Point Iteration",
+     Equation: Equation, 
+     Result: Xresult.toString()  
+   };
+
+   try {
+     await axios.post("http://localhost:5000/data", datadb);
+   } catch (err) {
+     console.log("Error posting data:", err); 
+   }
+ };
+
   const CalOnePoint = (X_zero, Equation, errorValue) => {
     let x_0 = X_zero;
     let iteration = 0;
     let ea = 0; // กำหนดค่าเริ่มต้นให้กับ ea
     const results = [];
     const graphData = [];
-  
+
     do {
       iteration++;
       let scope_0 = { x: x_0 };
       let fX_0 = evaluate(Equation, scope_0); // ประเมินสมการ f(x)
       let x_new = fX_0; // คำนวณค่า x ใหม่จาก f(x)
       ea = error(x_0, x_new); // คำนวณ error
-  
+
       console.log(`Iteration: ${iteration}, X_0: ${x_0}, X_new: ${x_new}, fX_0: ${fX_0}, Error: ${ea}`);
-  
-      results.push({ iteration, X_0: x_0, X_New: x_new, error_show: ea, f:fX_0 });
-      graphData.push({ x: iteration, y: x_new });
-  
+
+      results.push({ iteration, X_0: x_0, X_New: x_new, error_show: ea, f: fX_0 });
+      graphData.push({ x: x_0, y: fX_0 });
+
       x_0 = x_new; // อัพเดตค่า x_0
     } while (ea > errorValue && iteration < 1000); // loop จนกว่า error จะน้อยกว่าค่าที่กำหนดหรือ iteration เกิน 1000
-  
+
     setData(results);
     setdatagraph(graphData);
     setXresult(x_0);
@@ -55,40 +70,50 @@ const Page = () => {
     setError(parseFloat(event.target.value));
   };
   const calculateRoot = () => {
-    CalOnePoint(X_0, Equation, Error); // เรียกใช้ฟังก์ชันคำนวณ root
+    CalOnePoint(X_0, Equation, Error); 
+    adddata()
   };
 
   const chartData = {
     data: [
-        {
-            type: "scatter", //กราฟที่จะใช้
-            mode: "lines markers", //จะจุดหรือจะเส้น
-            x: datagraph.map((point) => point.x),
-            y: datagraph.map((point) => point.y),
-            marker: {color: 'blue'},
-            line: {color: 'red' },
-            name: 'f(X)',
-        },
-        {
-          type: "scatter", //กราฟที่จะใช้
-          mode: "lines markers", //จะจุดหรือจะเส้น
-          x: datagraph.map((point) => point.x),
-          y: datagraph.map((point) => point.y),
-          marker: {color: 'red'},
-          line: {color: 'blue' },
-          name: "f'(X)",
+      {
+        type: "scatter", //กราฟที่จะใช้
+        mode: "lines markers", //จะจุดหรือจะเส้น
+        x: datagraph.map((point) => point.x),
+        y: datagraph.map((point) => point.y),
+        marker: { color: 'blue' },
+        line: { shape: 'hv', color: 'red' },
+        name: 'f(X)',
+      },
+      {
+        type: "scatter", //กราฟที่จะใช้
+        mode: "lines markers", //จะจุดหรือจะเส้น
+        x: datagraph.map((point) => point.x),
+        y: datagraph.map((point) => point.y),
+        marker: { color: 'blue' },
+        line: { shape: 'spline', color: 'green' },
+        name: 'g(x)',
+      },
+      {
+        type: "scatter", //กราฟที่จะใช้
+        mode: "lines markers", //จะจุดหรือจะเส้น
+        x: datagraph.map((point) => point.x),
+        y: datagraph.map((point) => point.x),
+        marker: { color: 'blue' },
+        line: { color: 'blue' },
+        name: 'x=x',
       },
     ],
     layout: {
-        title: "One Point Iteration",
-        xaxis: {
-            zeroline: true,
-        },
-        yaxis: {
-            zeroline: true,
-        }
+      title: "Graph",
+      xaxis: {
+        zeroline: true,
+      },
+      yaxis: {
+        zeroline: true,
+      }
     }
-};
+  };
 
   return (
     <>
@@ -148,35 +173,33 @@ const Page = () => {
       {/* Graph */}
       <div className='min-h-max flex items-center justify-center gap-3  rounded-lg p-9'>
         <div className='rounded-lg shadow-lg w-full md:w-3/4 lg:w-1/2 flex justify-center gap-3 overflow-hidden'>
-          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain'config={{ scrollZoom: true }}/>
+          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain' config={{ scrollZoom: true }} />
         </div>
       </div>
 
       {/* Table */}
 
       <h1 className="block text-gray-700 text-sm font-bold mb-2">Table :</h1>
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full border-2 shadow-lg">
-              <thead>
-                <tr>
-                  <th>Iteration</th>
-                  <th>X</th>
-                  <th>Y</th>
-                  <th>Error</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((element, index) => (
-                  <tr key={index}>
-                    <td>{element.iteration}</td>
-                    <td>{element.Xl}</td>
-                    <td>{element.f.toPrecision(6)}</td>
-                    <td>{element.error_show.toPrecision(6)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra w-full border-2 shadow-lg">
+          <thead>
+            <tr>
+              <th>Iteration</th>
+              <th>X</th>
+              <th>Error</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((element, index) => (
+              <tr key={index}>
+                <td>{element.iteration}</td>
+                <td>{element.f.toPrecision(6)}</td>
+                <td>{element.error_show}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 };

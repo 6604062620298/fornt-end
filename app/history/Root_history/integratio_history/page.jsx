@@ -22,8 +22,8 @@ export default function Home() {
 
   return (
     <div className="text-center bg-app/image/Heaven-FOT-1.jpg">
-      <h1 className="text-5xl font-bold p-12">Project of Numerical methods</h1>
-      <h2 className="text-2xl font-bold">By pick</h2>
+      <h1 className="text-5xl font-bold p-12">History: Root of Equation</h1>
+      <h2 className="text-2xl font-bold"></h2>
       <h3 className="text-2xl font-bold py-10"></h3>
       
        <div className="mx-auto">

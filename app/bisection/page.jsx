@@ -1,12 +1,17 @@
 'use client'
+import axios from "axios";
 import { InlineMath } from "react-katex";
 import 'katex/dist/katex.min.css';
 import { useState } from "react"
 import dynamic from "next/dynamic"
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false })
-import { evaluate, to } from 'mathjs'
+import { add, evaluate, to } from 'mathjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+
+
 
 const Sample = () => {
   const [data, setData] = useState([]);
@@ -15,6 +20,22 @@ const Sample = () => {
   const [Xresult, setXresult] = useState(0);
   const [XL, setXL] = useState(1.5);
   const [XR, setXR] = useState(2);
+  
+  const adddata = async () => {
+     const datadb = {
+      Solution: "Bisection",
+      Equation: Equation, 
+      Result: Xresult.toString()  
+    };
+
+    try {
+      await axios.post("http://localhost:5000/data", datadb);
+    } catch (err) {
+      console.log("Error posting data:", err); 
+    }
+  };
+
+
 
   const error = (xold, xnew) => Math.abs((xnew - xold) / xnew) * 100;
 
@@ -69,6 +90,7 @@ const Sample = () => {
     const xlnum = parseFloat(XL)
     const xrnum = parseFloat(XR)
     Calbisection(xlnum, xrnum);
+    adddata();
   };
 
   const chartData = {
@@ -83,6 +105,7 @@ const Sample = () => {
       },
     ],
     layout: {
+      title: "Graph",
       xaxis: {
         zeroline: true,
       },
