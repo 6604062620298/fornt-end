@@ -1,8 +1,8 @@
-# Numerical Methods - Frontend 📐🧮
+# Numerical Methods - Frontend 
 
 This is the frontend application for the **Numerical Methods** project, built with [Next.js](https://nextjs.org/), [React](https://react.dev/), and [Tailwind CSS](https://tailwindcss.com/). It provides an interactive, web-based interface for solving complex mathematical problems using various numerical analysis algorithms.
 
-## ✨ Features
+##  Features
 
 The application supports a wide range of mathematical methods, complete with step-by-step solutions, dynamic equations rendering (LaTeX/KaTeX), and interactive graphing (Plotly.js / Chart.js).
 
@@ -33,7 +33,7 @@ The application supports a wide range of mathematical methods, complete with ste
 - Single & Composite Trapezoidal Rule
 - Single & Composite Simpson's Rule
 
-## 🚀 Tech Stack
+##  Tech Stack
 
 - **Framework:** Next.js 14, React 18
 - **Styling:** Tailwind CSS, daisyUI
@@ -41,7 +41,7 @@ The application supports a wide range of mathematical methods, complete with ste
 - **Data Visualization:** `react-plotly.js` (Plotly), `react-chartjs-2` (Chart.js)
 - **HTTP Client:** `axios` (for fetching calculation history from the backend)
 
-## 🛠️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js 18+ installed on your machine.
