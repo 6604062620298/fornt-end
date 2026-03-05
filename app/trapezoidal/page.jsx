@@ -1,6 +1,7 @@
 'use client'
 import { InlineMath } from "react-katex";
 import React, { useState } from 'react'
+import axios from 'axios';
 import 'katex/dist/katex.min.css';
 import { evaluate } from "mathjs";
 import dynamic from "next/dynamic"
@@ -24,8 +25,8 @@ function Page() {
             Equation: equation,
             a: a,
             b: b,
-            n: NuN,
-            Result: Xresult.toString()
+            n: 1, // Single trapezoidal uses n=1 conceptually, but no n variable is defined here
+            Result: xresult.toString()
         };
 
         try {
