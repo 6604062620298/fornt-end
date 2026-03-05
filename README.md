@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Numerical Methods - Frontend 📐🧮
 
-## Getting Started
+This is the frontend application for the **Numerical Methods** project, built with [Next.js](https://nextjs.org/), [React](https://react.dev/), and [Tailwind CSS](https://tailwindcss.com/). It provides an interactive, web-based interface for solving complex mathematical problems using various numerical analysis algorithms.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The application supports a wide range of mathematical methods, complete with step-by-step solutions, dynamic equations rendering (LaTeX/KaTeX), and interactive graphing (Plotly.js / Chart.js).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Root of Equations
+- Graphical Method
+- Bisection Method
+- False Position
+- One Point Iterations
+- Newton-Raphson
+- Secant Method
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 2. Linear Algebraic Equations
+- Cramer's Rule
+- Gauss Elimination
+- Gauss Jordan
+- Conjugate Gradient (and more)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 3. Interpolation
+- Newton's Divided Difference
+- Lagrange Interpolation
+- Spline Interpolation (Linear, Quadratic, Cubic)
 
-## Learn More
+### 4. Extrapolation / Curve Fitting
+- Simple Regression
+- Multiple Regression
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Integration
+- Single & Composite Trapezoidal Rule
+- Single & Composite Simpson's Rule
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Framework:** Next.js 14, React 18
+- **Styling:** Tailwind CSS, daisyUI
+- **Math & Equations:** `mathjs`, `react-katex` (KaTeX)
+- **Data Visualization:** `react-plotly.js` (Plotly), `react-chartjs-2` (Chart.js)
+- **HTTP Client:** `axios` (for fetching calculation history from the backend)
 
-## Deploy on Vercel
+## 🛠️ Getting Started
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Prerequisites
+- Node.js 18+ installed on your machine.
+- *Optional:* The accompanying backend server running to track calculation history.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Installation
+
+1. Clone the repository and navigate to the frontend directory:
+   ```bash
+   cd fornt-end
