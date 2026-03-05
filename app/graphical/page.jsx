@@ -5,7 +5,7 @@ import { Button, Container, Form, Table } from "react-bootstrap";
 import { evaluate } from 'mathjs';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
+// this is graphical
 const page = () => {
 
   const [datagraph, setdatagraph] = useState([]); // สำหรับเก็บข้อมูลกราฟ
