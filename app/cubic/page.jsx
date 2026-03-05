@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { InlineMath, BlockMath } from 'react-katex';
 
-function page() {
+function Page() {
 
     const [sizely, setsizely] = useState(4); // Cubic spline ต้องใช้ 4 จุด
     const [x, setx] = useState(Array(sizely).fill({ x: '', fx: '' }));
@@ -32,14 +32,14 @@ function page() {
 
         for (let i = 0; i < n; i++) {
             if (i > 0 && xnn >= input_x[i - 1] && xnn <= input_x[i]) {
-               
+
                 const m = (input_y[i] - input_y[i - 1]) / (input_x[i] - input_x[i - 1]);
-               
+
                 fx = input_y[i - 1] + m * (xnn - input_x[i - 1]);
-                
+
                 steps.push(`f_{${i}}(x) = f(${input_x[i - 1]}) + \\frac{f(${input_x[i]}) - f(${input_x[i - 1]})}{${input_x[i]} - ${input_x[i - 1]}}(x - ${input_x[i - 1]})`);
                 steps.push(`f(${xnn}) = ${input_y[i - 1]} + \\frac{(${input_y[i]} - ${input_y[i - 1]})}{(${input_x[i]} - ${input_x[i - 1]})}(${xnn} - ${input_x[i - 1]})`);
-                
+
                 break;
             }
         }
@@ -145,4 +145,4 @@ function page() {
     )
 }
 
-export default page;
+export default Page;

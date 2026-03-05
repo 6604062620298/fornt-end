@@ -102,9 +102,6 @@ export default function RootLayout({ children }) {
               </ul>
             </div>
             <a className="btn btn-ghost text-xl">Numerical</a>
-            <label class="flex cursor-pointer gap-2">
-              <input type="checkbox" value="synthwave" class="toggle theme-controller" />
-            </label>
           </div>
 
 
@@ -181,16 +178,6 @@ export default function RootLayout({ children }) {
                     <li><Link href="/simpson">Single Simpson's</Link></li>
                     <li><Link href="/composite_simpson">Composite Simpson's</Link></li>
                     <li><Link href="/history/Root_history/integratio_history">History Intergration</Link></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-            <ul className="menu menu-horizontal px-1">
-              <li>
-                <details>
-                  <summary className="p-8">Differention</summary>
-                  <ul className="p-2">
-                    <li><Link href="/bisection">Bisection</Link></li>
                   </ul>
                 </details>
               </li>

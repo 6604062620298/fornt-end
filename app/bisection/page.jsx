@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 import { useState } from "react"
 import dynamic from "next/dynamic"
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false })
-import { add, evaluate, to } from 'mathjs'
+import { evaluate } from 'mathjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -13,25 +13,25 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 
 
-const Sample = () => {
+const Page = () => {
   const [data, setData] = useState([]);
   const [datagraph, setdatagraph] = useState([]);
   const [Equation, setEquation] = useState("(x^4)-13");
   const [Xresult, setXresult] = useState(0);
   const [XL, setXL] = useState(1.5);
   const [XR, setXR] = useState(2);
-  
+
   const adddata = async () => {
-     const datadb = {
+    const datadb = {
       Solution: "Bisection",
-      Equation: Equation, 
-      Result: Xresult.toString()  
+      Equation: Equation,
+      Result: Xresult.toString()
     };
 
     try {
-      await axios.post("https://back-end-three-rho.vercel.app/data", datadb);
+      await axios.post("http://localhost:5000/data", datadb);
     } catch (err) {
-      console.log("Error posting data:", err); 
+      console.log("Error posting data:", err);
     }
   };
 
@@ -172,7 +172,7 @@ const Sample = () => {
       {/* Graph */}
       <div className='min-h-max flex items-center justify-center gap-3  rounded-lg p-9'>
         <div className='rounded-lg shadow-lg w-full md:w-3/4 lg:w-1/2 flex justify-center gap-3 overflow-hidden'>
-          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain'config={{ scrollZoom: true }}/>
+          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain' config={{ scrollZoom: true }} />
         </div>
       </div>
 
@@ -209,4 +209,4 @@ const Sample = () => {
   )
 }
 
-export default Sample
+export default Page

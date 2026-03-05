@@ -6,7 +6,7 @@ import { evaluate } from 'mathjs';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 // this is graphical
-const page = () => {
+const Page = () => {
 
   const [datagraph, setdatagraph] = useState([]); // สำหรับเก็บข้อมูลกราฟ
   const [data, setData] = useState([]); // สำหรับเก็บข้อมูลตาราง
@@ -144,4 +144,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

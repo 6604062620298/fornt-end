@@ -9,7 +9,7 @@ import { evaluate } from 'mathjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const page = () => {
+const Page = () => {
 
   const error = (xold, xnew) => Math.abs((xnew - xold) / xnew) * 100;
 
@@ -22,17 +22,17 @@ const page = () => {
 
   const adddata = async () => {
     const datadb = {
-     Solution: "False Position",
-     Equation: Equation, 
-     Result: Xresult.toString()  
-   };
+      Solution: "False Position",
+      Equation: Equation,
+      Result: Xresult.toString()
+    };
 
-   try {
-     await axios.post("http://localhost:5000/data", datadb); 
-   } catch (err) {
-     console.log("Error posting data:", err); 
-   }
- };
+    try {
+      await axios.post("http://localhost:5000/data", datadb);
+    } catch (err) {
+      console.log("Error posting data:", err);
+    }
+  };
 
   const Calbisection = (xl, xr) => {
     let xm, fXm, fXr, fXl, ea, scope;
@@ -172,39 +172,39 @@ const page = () => {
         <h5>Answer = {Xresult.toPrecision(7)}</h5>
       </div>
 
-       {/* Graph */}
+      {/* Graph */}
       <div className='min-h-max flex items-center justify-center gap-3  rounded-lg p-9'>
         <div className='rounded-lg shadow-lg w-full md:w-3/4 lg:w-1/2 flex justify-center gap-3 overflow-hidden'>
-          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain'config={{ scrollZoom: true }}/>
+          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain' config={{ scrollZoom: true }} />
         </div>
       </div>
 
       {/* Table */}
-        <h1 className="block text-gray-700 text-sm font-bold mb-2">Table :</h1>
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full border-2 shadow-lg ">
-              <thead>
-                <tr>
-                  <th>Iteration</th>
-                  <th>Xm</th>
-                  <th>f(m)</th>
-                  <th>Error</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((element, index) => (
-                  <tr key={index}>
-                    <td>{element.iteration}</td>
-                    <td>{element.Xm.toPrecision(7)}</td>
-                    <td>{element.f.toPrecision(7)}</td>
-                    <td>{element.ar.toPrecision(7)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      <h1 className="block text-gray-700 text-sm font-bold mb-2">Table :</h1>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra w-full border-2 shadow-lg ">
+          <thead>
+            <tr>
+              <th>Iteration</th>
+              <th>Xm</th>
+              <th>f(m)</th>
+              <th>Error</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((element, index) => (
+              <tr key={index}>
+                <td>{element.iteration}</td>
+                <td>{element.Xm.toPrecision(7)}</td>
+                <td>{element.f.toPrecision(7)}</td>
+                <td>{element.ar.toPrecision(7)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }
 
-export default page
+export default Page

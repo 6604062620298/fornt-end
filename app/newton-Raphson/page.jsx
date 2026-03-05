@@ -9,7 +9,7 @@ import { evaluate, derivative } from 'mathjs';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const page = () => {
+const Page = () => {
 
   const errorr = (f) => Math.abs((f * 100));
   const error = (xold, xnew) => Math.abs((xnew - xold) / xnew) * 100; // ฟังก์ชันคำนวณ error
@@ -23,24 +23,24 @@ const page = () => {
 
   const adddata = async () => {
     const datadb = {
-     Solution: "Newton Raphson",
-     Equation: Equation, 
-     Result: Xresult.toString()  
-   };
+      Solution: "Newton Raphson",
+      Equation: Equation,
+      Result: Xresult.toString()
+    };
 
-   try {
-     await axios.post("http://localhost:5000/data", datadb);
-   } catch (err) {
-     console.log("Error posting data:", err); 
-   }
- };
+    try {
+      await axios.post("http://localhost:5000/data", datadb);
+    } catch (err) {
+      console.log("Error posting data:", err);
+    }
+  };
 
   const Calnewton = (Xstart, Equation, errorValue) => {
     let xstart = Xstart
-    let ea,er;
+    let ea, er;
     let iteration = 0;
     let xnew, fX, f_prime;
-    
+
     const tempData = [];
     const newGraphData = [];
 
@@ -54,7 +54,7 @@ const page = () => {
       ea = error(xstart, xnew);
       er = errorr(fX);
 
-      tempData.push({ iteration, Xl: xstart, Xm: xnew, Xr: xnew, er:ea, f:fX, e:er }); // เก็บค่าลงในตาราง
+      tempData.push({ iteration, Xl: xstart, Xm: xnew, Xr: xnew, er: ea, f: fX, e: er }); // เก็บค่าลงในตาราง
       newGraphData.push({ x: xnew, y: 0 });
       newGraphData.push({ x: xnew, y: f_prime }); // เก็บค่าลงในกราฟ
 
@@ -91,27 +91,27 @@ const page = () => {
         x: datagraph.map((point) => point.x),  // X จาก datagraph
         y: datagraph.map((point) => point.y),  // Y คือ f(X)
         marker: { color: 'red' },
-        name : 'Marker'
-    },
-    {
-      type: "scatter",
-      mode: "linesmarkers",
-      x: datagraph.map((point) => point.x),  // X จาก datagraph
-      y: datagraph.map((item) => item.y),  // Y คือ f'(X)
-      line: { color: 'blue' },
-      name: 'Line'
-  },
+        name: 'Marker'
+      },
+      {
+        type: "scatter",
+        mode: "linesmarkers",
+        x: datagraph.map((point) => point.x),  // X จาก datagraph
+        y: datagraph.map((item) => item.y),  // Y คือ f'(X)
+        line: { color: 'blue' },
+        name: 'Line'
+      },
     ],
     layout: {
-        title: "Graph",
-        xaxis: {
-            zeroline: true,
-        },
-        yaxis: {
-            zeroline: true,
-        },
+      title: "Graph",
+      xaxis: {
+        zeroline: true,
+      },
+      yaxis: {
+        zeroline: true,
+      },
     }
-};
+  };
 
   return (
     <>
@@ -170,37 +170,37 @@ const page = () => {
       {/* Graph */}
       <div className='min-h-max flex items-center justify-center gap-3  rounded-lg p-9'>
         <div className='rounded-lg shadow-lg w-full md:w-3/4 lg:w-1/2 flex justify-center gap-3 overflow-hidden'>
-          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain'config={{ scrollZoom: true }}/>
+          <Plot data={chartData.data} layout={chartData.layout} className='rounded-lg shadow-lg w-full h-auto max-w-full object-contain' config={{ scrollZoom: true }} />
         </div>
       </div>
 
       {/* Table */}
 
-        <h1 className="block text-gray-700 text-sm font-bold mb-2">Table :</h1>
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full border-2 shadow-lg">
-              <thead>
-                <tr>
-                  <th>Iteration</th>
-                  <th>X</th>
-                  <th>Y</th>
-                  <th>Error</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((element, index) => (
-                  <tr key={index}>
-                    <td>{element.iteration}</td>
-                    <td>{element.Xl.toPrecision(6)}</td>
-                    <td>{element.f.toPrecision(6)}</td>
-                    <td>{element.e.toPrecision(6)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      <h1 className="block text-gray-700 text-sm font-bold mb-2">Table :</h1>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra w-full border-2 shadow-lg">
+          <thead>
+            <tr>
+              <th>Iteration</th>
+              <th>X</th>
+              <th>Y</th>
+              <th>Error</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((element, index) => (
+              <tr key={index}>
+                <td>{element.iteration}</td>
+                <td>{element.Xl.toPrecision(6)}</td>
+                <td>{element.f.toPrecision(6)}</td>
+                <td>{element.e.toPrecision(6)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 };
 
-export default page;
+export default Page;

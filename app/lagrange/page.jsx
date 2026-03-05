@@ -2,7 +2,7 @@
 import { index, leftShift } from 'mathjs';
 import React, { useEffect, useState } from 'react'
 
-function page() {
+function Page() {
 
     const [sizely, setsizely] = useState(3);
     const [x, setx] = useState(Array(sizely).fill({ x: '', fx: '' }));
@@ -29,25 +29,25 @@ function page() {
             return;
         }
 
-        for(let i = 0; i < n; i++){
-            res_up = 1; 
+        for (let i = 0; i < n; i++) {
+            res_up = 1;
             res_down = 1;
 
-            for(let j = 0; j < n; j++){
-                if(j != i){
+            for (let j = 0; j < n; j++) {
+                if (j != i) {
                     res_up *= x_input[j] - x_value;
                 }
             }
-            for(let j = 0; j < n; j++){
-                if(j != i){
+            for (let j = 0; j < n; j++) {
+                if (j != i) {
                     res_down *= x_input[j] - x_input[i];
                 }
             }
             L[i] = res_up / res_down;
         }
 
-        for(let i = 0; i < n; i++){
-             res += L[i] * y_input[i];
+        for (let i = 0; i < n; i++) {
+            res += L[i] * y_input[i];
         }
 
         if (res !== undefined) {
@@ -63,7 +63,7 @@ function page() {
 
     const input_size = (e) => {
         const value = parseInt(e.target.value);
-        if(value > 0){
+        if (value > 0) {
             setsizely(value);
         }
     }
@@ -108,7 +108,7 @@ function page() {
             </div>
 
             <div className="text-center p-2">
-            <h5>Answer = {xresult.toPrecision(3)}</h5>
+                <h5>Answer = {xresult.toPrecision(3)}</h5>
             </div>
 
             <div className='flex justify-center border-2 shadow-lg m-6 p-3'>
@@ -116,14 +116,14 @@ function page() {
                     {x.map((point, index) => (
                         <div key={index} className='p-1'>
                             <label className="text-sm md:text-base p-1">{index + 1}.</label>
-                            <input type="text" value={point.x} onChange={(e) => InputChange_x(index, 'x', e.target.value)} placeholder={`x${index + 1}`} className='btn border-2 shadow-lg w-36'/>
+                            <input type="text" value={point.x} onChange={(e) => InputChange_x(index, 'x', e.target.value)} placeholder={`x${index + 1}`} className='btn border-2 shadow-lg w-36' />
                         </div>
                     ))}
                 </div>
                 <div>
                     {y.map((point, index) => (
                         <div key={index} className='p-1'>
-                            <input type="text" value={point.fx} onChange={(e) => InputChange_y(index, 'fx', e.target.value)} placeholder={`f(x${index + 1})`} className='btn border-2 shadow-lg w-36'/>
+                            <input type="text" value={point.fx} onChange={(e) => InputChange_y(index, 'fx', e.target.value)} placeholder={`f(x${index + 1})`} className='btn border-2 shadow-lg w-36' />
                         </div>
                     ))}
                 </div>
@@ -146,4 +146,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

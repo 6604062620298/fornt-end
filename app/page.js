@@ -21,12 +21,12 @@ export default function Home() {
   };
 
   return (
-    <div className="text-center bg-app/image/Heaven-FOT-1.jpg">
+    <div className="text-center">
       <h1 className="text-5xl font-bold p-12">Project of Numerical methods</h1>
       <h2 className="text-2xl font-bold">By pick</h2>
       <h3 className="text-2xl font-bold py-10"></h3>
-      
-       <div className="mx-auto">
+
+      <div className="mx-auto">
         <h1 className="block text-gray-700 text-sm font-bold mb-2"></h1>
         <div className="p-3 border-2 shadow-lg">
           <div className="overflow-x-auto">

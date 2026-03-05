@@ -8,14 +8,14 @@ const Plot = dynamic(() => import("react-plotly.js"), { ssr: false })
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-function page() {
+function Page() {
 
     const [a, seta] = useState(-1);
     const [b, setb] = useState(2);
     const [n, setn] = useState(4);
     const [fx, setfx] = useState('x^7+2x^3-1')
-    const [result,setresult] = useState();
-    const [solution,setsolution] = useState([]);
+    const [result, setresult] = useState();
+    const [solution, setsolution] = useState([]);
 
     const calculatecom_si = () => {
         let h = (b - a) / n;
@@ -29,19 +29,19 @@ function page() {
         steps.push(`h = b - a / n = ${b} - ${a} / ${n} = ${h}`);
 
         xvalue.push(a);
-        fvalue.push(evaluate(fx, {x:a}));
+        fvalue.push(evaluate(fx, { x: a }));
 
         steps.push(`f(x0 = ${a}) = ${fx} = ${fvalue}`)
 
-        for(let i = 1; i < n; i++){ 
+        for (let i = 1; i < n; i++) {
             let x_i = a + i * h;
             xvalue.push(x_i)
-            let f_value = evaluate(fx,{x:x_i})
+            let f_value = evaluate(fx, { x: x_i })
             fvalue.push(f_value);
             summ += pp * f_value;
-            if(pp == 4){
+            if (pp == 4) {
                 pp = 2;
-            }else{
+            } else {
                 pp = 4;
             }
             steps.push(`f(x${i} = ${xvalue[i]}) = ${fx} = ${fvalue[i]}`)
@@ -69,10 +69,10 @@ function page() {
         console.log(summ);
     }
 
-    const input_a = (e) =>{
+    const input_a = (e) => {
         seta(parseFloat(e.target.value));
     }
-    const input_b = (e) =>{
+    const input_b = (e) => {
         setb(parseFloat(e.target.value));
     }
     const input_n = (e) => {
@@ -82,11 +82,11 @@ function page() {
         setfx(e.target.value);
     }
     return (
-        <>     
+        <>
             <header className='p-7'>
                 <h1 className='text-center font-bold text-4xl p-4'>Composite Simpson's Rule</h1>
             </header>
-            
+
             {/* Display Equation */}
             <div className="mx-auto max-w-lg p-4">
                 <div className="flex justify-center border-2 shadow-lg">
@@ -102,7 +102,7 @@ function page() {
                     <input type="text" value={fx} onChange={input_fx} className="btn border-2 shadow-lg w-64" />
                 </div>
             </div>
-            
+
             <div className='flex justify-center'>
                 <div className="flex flex-col">
                     <label className="p-2"><InlineMath math="a = x0" /></label>
@@ -142,7 +142,7 @@ function page() {
                     <div className="flex flex-col items-center">
                         {solution.map((step, index) => (
                             <div key={index} className="mb-2 text-sm md:text-base">
-                                <BlockMath math={step}/>
+                                <BlockMath math={step} />
                             </div>
                         ))}
                     </div>
@@ -153,4 +153,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

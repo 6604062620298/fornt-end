@@ -9,7 +9,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 
-function page() {
+function Page() {
     const [a, seta] = useState(0);
     const [b, setb] = useState(2);
     const [n, setn] = useState(4);
@@ -24,11 +24,11 @@ function page() {
         let xvalue = [];
         let fvalue = [];
         let summ = 0;
-        let steps =[];
-        let stepss =[]
+        let steps = [];
+        let stepss = []
 
         steps.push(`I = \\int_{${a}}^{${b}} f(x) dx = \\int_{${a}}^{${b}} ${fx} dx`)
-        
+
         xvalue.push(a);
         fvalue.push(evaluate(fx, { x: a }));
 
@@ -135,7 +135,7 @@ function page() {
                     <div className="flex flex-col items-center">
                         {solution.map((step, index) => (
                             <div key={index} className="mb-2 text-sm md:text-base">
-                                <BlockMath math={step}/>
+                                <BlockMath math={step} />
                             </div>
                         ))}
                         {Here.map((step, index) => (
@@ -150,4 +150,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

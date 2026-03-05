@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react'
 
-function page() {
+function Page() {
 
     const [sizely, setsizely] = useState(3);
     const [x, setx] = useState(Array(sizely).fill({ x: '', fx: '' }));
@@ -147,4 +147,4 @@ function page() {
     );
 }
 
-export default page;
+export default Page;

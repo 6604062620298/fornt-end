@@ -9,31 +9,31 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 
-function page() {
+function Page() {
 
     const [a, seta] = useState(0);
     const [b, setb] = useState(2);
-    const [equation, setequation] = useState('4x^5-3x^4+x^3-6x+2') 
+    const [equation, setequation] = useState('4x^5-3x^4+x^3-6x+2')
     const [xresult, setxresult] = useState(0);
     const [grapdata, setgrapdata] = useState([]);
     const [solution, setsolution] = useState([]);
 
     const adddata = async () => {
         const datadb = {
-         Solution: "Single Trapezoidal Rule",
-         Equation: equation, 
-         a: a,
-         b: b,
-         n: NuN,
-         Result: Xresult.toString()  
-       };
-   
-       try {
-         await axios.post("http://localhost:5000/data", datadb);
-       } catch (err) {
-         console.log("Error posting data:", err); 
-       }
-     };
+            Solution: "Single Trapezoidal Rule",
+            Equation: equation,
+            a: a,
+            b: b,
+            n: NuN,
+            Result: Xresult.toString()
+        };
+
+        try {
+            await axios.post("http://localhost:5000/integration", datadb);
+        } catch (err) {
+            console.log("Error posting data:", err);
+        }
+    };
 
     const calculatetrapez = () => {
         const x_0 = a;
@@ -44,7 +44,7 @@ function page() {
         fx_1 = evaluate(equation, { x: x_1 });
         I = (x_1 - x_0) * (fx_0 + fx_1) / 2;
         const steps = [];
-        
+
         const points = [];
         const numPoints = 50; // จำนวนจุดที่จะคำนวณและแสดงในกราฟ
         const step = (x_1 - x_0) / numPoints;
@@ -55,7 +55,7 @@ function page() {
             points.push({ x, y });  // เก็บค่า x และ y ลงใน array
         }
 
-        points.push({b:b,x1:I})
+        points.push({ b: b, x1: I })
 
         setgrapdata(points);
 
@@ -98,10 +98,10 @@ function page() {
                 type: "scatter",
                 mode: "lines",
                 fill: 'tozeroy',
-                fillcolor: 'rgba(0, 255, 0, 0.2)',  
-                line: { color: 'rgba(0, 0, 0, 0)' }, 
-                x: [a, b],  
-                y: [evaluate(equation, { x: a }), evaluate(equation, { x: b })], 
+                fillcolor: 'rgba(0, 255, 0, 0.2)',
+                line: { color: 'rgba(0, 0, 0, 0)' },
+                x: [a, b],
+                y: [evaluate(equation, { x: a }), evaluate(equation, { x: b })],
                 name: 'Trapezoid',
             },
             {
@@ -109,7 +109,7 @@ function page() {
                 mode: "lines",
                 line: { color: 'black', dash: 'dash' },
                 x: [a, b],
-                y: [evaluate(equation, { x: a }), evaluate(equation, { x: b })], 
+                y: [evaluate(equation, { x: a }), evaluate(equation, { x: b })],
                 name: 'Trapezoidal Approximation',
             },
         ],
@@ -120,8 +120,8 @@ function page() {
             showlegend: true
         }
     };
-    
-    
+
+
     return (
         <>
             {/* หัวเรื่อง */}
@@ -140,21 +140,21 @@ function page() {
 
             <div className='flex justify-center'>
                 <div className="flex flex-col">
-                <label className="p-2"><InlineMath math="f(x)" /></label>
+                    <label className="p-2"><InlineMath math="f(x)" /></label>
                     <input type="text" value={equation} onChange={inputequation} className="btn border-2 shadow-lg w-64" />
                 </div>
             </div>
 
             <div className='flex justify-center'>
                 <div className="flex flex-col">
-                    <label className="p-2"><InlineMath math="a = x0"/></label>
+                    <label className="p-2"><InlineMath math="a = x0" /></label>
                     <input type="number" value={a} onChange={input_a} className="btn border-2 shadow-lg w-64" />
                 </div>
             </div>
 
             <div className='flex justify-center'>
                 <div className="flex flex-col">
-                    <label className="p-2"><InlineMath math="b = x1"/></label>
+                    <label className="p-2"><InlineMath math="b = x1" /></label>
                     <input type="number" value={b} onChange={input_b} className="btn border-2 shadow-lg w-64" />
                 </div>
             </div>
@@ -166,7 +166,7 @@ function page() {
 
             <div className='flex flex-col md:flex-row justify-center items-center mb-4 gap-4'>
                 <div className="flex items-center gap-2">
-                    <button value={xresult} onClick={calculatetrapez } className="btn border-2 shadow-lg bg-blue-600 text-white">Calculate</button>
+                    <button value={xresult} onClick={calculatetrapez} className="btn border-2 shadow-lg bg-blue-600 text-white">Calculate</button>
                 </div>
             </div>
 
@@ -193,4 +193,4 @@ function page() {
     )
 }
 
-export default page 
+export default Page

@@ -9,11 +9,11 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 
-function page() {
+function Page() {
 
     const [a, seta] = useState(-1);
     const [b, setb] = useState(2);
-    const [equation, setequation] = useState('x^7+2x^3-1') 
+    const [equation, setequation] = useState('x^7+2x^3-1')
     const [xresult, setxresult] = useState(0);
     const [grapdata, setgrapdata] = useState([]);
     const [solution, setsolution] = useState([]);
@@ -25,12 +25,12 @@ function page() {
         console.log(a);
         console.log(b);
         let I = 0
-        let fx_0,fx_1,fx_2;
+        let fx_0, fx_1, fx_2;
         fx_0 = evaluate(equation, { x: a });
-        fx_1 = evaluate(equation, { x: x_1});
-        fx_2 = evaluate(equation, { x: b});
+        fx_1 = evaluate(equation, { x: x_1 });
+        fx_2 = evaluate(equation, { x: b });
 
-        I = (b - a )/3 * (fx_0 + 4 * fx_1 + fx_2) / 2;
+        I = (b - a) / 3 * (fx_0 + 4 * fx_1 + fx_2) / 2;
 
         const steps = [];
 
@@ -40,7 +40,7 @@ function page() {
         steps.push(`f(x2 =  ${b}) = ${equation} = ${fx_2}`);
         steps.push(`I = h/2(f(x0) + 4f(x1) + f(x2))) = ${x_1} / 2 (${fx_0} + 4(${fx_1}) +${fx_2}) = ${I}`)
 
-        
+
         setsolution(steps);
         setgrapdata(I);
         setxresult(I);
@@ -61,7 +61,7 @@ function page() {
             {
                 type: "scatter",
                 mode: "lines markers",
-                line: {color: 'red'},
+                line: { color: 'red' },
                 name: 'f(x)',
             },
         ]
@@ -85,21 +85,21 @@ function page() {
 
             <div className='flex justify-center'>
                 <div className="flex flex-col">
-                <label className="p-2"><InlineMath math="f(x)" /></label>
+                    <label className="p-2"><InlineMath math="f(x)" /></label>
                     <input type="text" value={equation} onChange={inputequation} className="btn border-2 shadow-lg w-64" />
                 </div>
             </div>
 
             <div className='flex justify-center'>
                 <div className="flex flex-col">
-                    <label className="p-2"><InlineMath math="a = x0"/></label>
+                    <label className="p-2"><InlineMath math="a = x0" /></label>
                     <input type="number" value={a} onChange={input_a} className="btn border-2 shadow-lg w-64" />
                 </div>
             </div>
 
             <div className='flex justify-center'>
                 <div className="flex flex-col">
-                    <label className="p-2"><InlineMath math="b = x1"/></label>
+                    <label className="p-2"><InlineMath math="b = x1" /></label>
                     <input type="number" value={b} onChange={input_b} className="btn border-2 shadow-lg w-64" />
                 </div>
             </div>
@@ -138,4 +138,4 @@ function page() {
     )
 }
 
-export default page 
+export default Page 

@@ -156,7 +156,7 @@ function Page() {
         {/* Display Solution Steps */}
         <div className='my-11 border-2 shadow-lg p-4 md:p-14'>
           <h1 className='block text-gray-700 text-sm font-bold mb-2'>Solution :</h1>
-          <div className="mtimport { det } from 'mathjs';-4 overflow-x-auto flex justify-center">
+          <div className="mt-4 overflow-x-auto flex justify-center">
             <div className="flex flex-col items-center">
               {solutionSteps.map((step, index) => (
                 <div key={index} className="mb-2 text-sm md:text-base">

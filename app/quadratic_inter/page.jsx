@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { InlineMath, BlockMath } from 'react-katex';
 
-function page() {
+function Page() {
 
     const [sizely, setsizely] = useState(3);
     const [x, setx] = useState(Array(sizely).fill({ x: '', fx: '' }));
@@ -22,38 +22,38 @@ function page() {
         const n = input_x.length;
         const xnn = parseFloat(xn);
         let fxn;
-    
+
         if (n < 3) {
             alert("ต้องอย่างน้อย 3 จุดนะครับ");
             return;
         }
-        
+
         const steps = [];
-        
+
         for (let i = 0; i < n - 2; i++) {
             if (xnn >= input_x[i] && xnn <= input_x[i + 2]) {
                 const a0 = input_y[i];
                 const a1 = (input_y[i + 1] - input_y[i]) / (input_x[i + 1] - input_x[i]);
                 const a2 = ((input_y[i + 2] - input_y[i + 1]) / (input_x[i + 2] - input_x[i + 1]) - a1) / (input_x[i + 2] - input_x[i]);
-    
+
                 fxn = a0 + a1 * (xnn - input_x[i]) + a2 * (xnn - input_x[i]) * (xnn - input_x[i + 1]);
-    
+
                 steps.push(`f(x) = ${a0} + ${a1}(x - ${input_x[i]}) + ${a2}(x - ${input_x[i]})(x - ${input_x[i + 1]})`);
                 steps.push(`f(${xnn}) = ${a0} + ${a1}(${xnn} - ${input_x[i]}) + ${a2}(${xnn} - ${input_x[i]})(${xnn} - ${input_x[i + 1]})`);
-    
+
                 break;
             }
         }
-    
+
         if (fxn !== undefined) {
             setxresult(fxn);
         } else {
             alert("ค่า X นอกช่วงของข้อมูลที่มีอยู่");
         }
-    
+
         setsolution(steps);
     };
-    
+
 
     const inputxn = (event) => {
         setxn(event.target.value);
@@ -146,4 +146,4 @@ function page() {
     )
 }
 
-export default page
+export default Page
